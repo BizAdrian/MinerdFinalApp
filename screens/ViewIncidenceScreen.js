@@ -21,9 +21,13 @@ export default function ViewIncidentsScreen({ navigation }) {
       onPress={() => navigation.navigate("Detalles de Incidencia", { incidence: item })}
       style={styles.incidence}
     >
-      <Text style={styles.incidenceText}>ID Centro: {item.centerCode}</Text>
+      <Text style={styles.incidenceText}>Título: {item.title}</Text>
+      <Text style={styles.incidenceText}>Centro Educativo: {item.schoolCenter}</Text>
+      <Text style={styles.incidenceText}>Regional: {item.regional}</Text>
+      <Text style={styles.incidenceText}>Distrito: {item.district}</Text>
       <Text style={styles.incidenceText}>Fecha: {item.date}</Text>
       <Text style={styles.incidenceText}>Hora: {item.time}</Text>
+      <Text style={styles.incidenceText}>Descripción: {item.description}</Text>
     </TouchableOpacity>
   );
 
@@ -58,5 +62,6 @@ const styles = StyleSheet.create({
   incidenceText: {
     fontSize: 16,
     color: '#333',
+    marginBottom: 4,
   },
 });

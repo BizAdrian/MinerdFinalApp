@@ -4,20 +4,18 @@ import * as ImagePicker from 'expo-image-picker';
 import { Audio } from 'expo-av';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Location from 'expo-location';
 
 export default function RegisterIncidenceScreen({ navigation }) {
-  const [directorId, setDirectorId] = useState('');
-  const [centerCode, setCenterCode] = useState('');
+  const [title, setTitle] = useState('');
+  const [schoolCenter, setSchoolCenter] = useState('');
+  const [regional, setRegional] = useState('');
+  const [district, setDistrict] = useState('');
   const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState(new Date());
-  const [comment, setComment] = useState('');
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [description, setDescription] = useState('');
   const [photoUri, setPhotoUri] = useState('');
   const [audioUri, setAudioUri] = useState('');
   const [recording, setRecording] = useState(null);
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showTimePicker, setShowTimePicker] = useState(false);
-  const [location, setLocation] = useState(null);
   const soundRef = useRef(null);
   const [fadeAnim] = useState(new Animated.Value(0));
 
@@ -25,19 +23,13 @@ export default function RegisterIncidenceScreen({ navigation }) {
     (async () => {
       const { status: audioStatus } = await Audio.requestPermissionsAsync();
       const { status: imageStatus } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      const { status: locationStatus } = await Location.requestPermissionsAsync();
-      if (audioStatus !== 'granted' || imageStatus !== 'granted' || locationStatus !== 'granted') {
-        Alert.alert('Error', 'Se necesitan permisos para usar el micrófono, la biblioteca de imágenes y la ubicación.');
+      if (audioStatus !== 'granted' || imageStatus !== 'granted') {
+        Alert.alert('Error', 'Se necesitan permisos para usar el micrófono y la biblioteca de imágenes.');
       }
     })();
   }, []);
 
   useEffect(() => {
-    (async () => {
-      let { coords } = await Location.getCurrentPositionAsync({});
-      setLocation(coords);
-    })();
-
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 1000,
@@ -86,41 +78,31 @@ export default function RegisterIncidenceScreen({ navigation }) {
   };
 
   const handleDateChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShowDatePicker(Platform.OS === 'ios');
-    setDate(currentDate);
-  };
-
-  const handleTimeChange = (event, selectedTime) => {
-    const currentTime = selectedTime || time;
-    setShowTimePicker(Platform.OS === 'ios');
-    setTime(currentTime);
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
   };
 
   const showDatepicker = () => {
     setShowDatePicker(true);
   };
 
-  const showTimepicker = () => {
-    setShowTimePicker(true);
-  };
-
   const handleSubmit = async () => {
-    if (!directorId || !centerCode || !date || !time) {
+    if (!title || !schoolCenter || !regional || !district || !date || !description) {
       Alert.alert('Error', 'Por favor, proporciona todos los campos obligatorios.');
       return;
     }
 
     const newIncidence = {
-      directorId,
-      centerCode,
+      title,
+      schoolCenter,
+      regional,
+      district,
       date: date.toISOString().split('T')[0],
-      time: time.toISOString().split('T')[1].substring(0, 5),
-      comment,
+      description,
       photoUri,
       audioUri,
-      latitude: location?.latitude,
-      longitude: location?.longitude,
     };
 
     try {
@@ -137,17 +119,29 @@ export default function RegisterIncidenceScreen({ navigation }) {
   };
 
   return (
-    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+    <View style={styles.container}>
       <TextInput
-        placeholder="Cédula del Director"
-        value={directorId}
-        onChangeText={setDirectorId}
+        placeholder="Título"
+        value={title}
+        onChangeText={setTitle}
         style={styles.input}
       />
       <TextInput
-        placeholder="ID del Centro"
-        value={centerCode}
-        onChangeText={setCenterCode}
+        placeholder="Centro Educativo"
+        value={schoolCenter}
+        onChangeText={setSchoolCenter}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Regional"
+        value={regional}
+        onChangeText={setRegional}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Distrito"
+        value={district}
+        onChangeText={setDistrict}
         style={styles.input}
       />
       <TouchableOpacity style={styles.button} onPress={showDatepicker}>
@@ -161,23 +155,11 @@ export default function RegisterIncidenceScreen({ navigation }) {
           onChange={handleDateChange}
         />
       )}
-      <TouchableOpacity style={styles.button} onPress={showTimepicker}>
-        <Text style={styles.buttonText}>Seleccionar Hora</Text>
-      </TouchableOpacity>
-      {showTimePicker && (
-        <DateTimePicker
-          value={time}
-          mode="time"
-          display="default"
-          onChange={handleTimeChange}
-        />
-      )}
       <Text style={styles.infoText}>Fecha: {date.toDateString()}</Text>
-      <Text style={styles.infoText}>Hora: {time.toTimeString().substring(0, 5)}</Text>
       <TextInput
-        placeholder="Añadir Comentario"
-        value={comment}
-        onChangeText={setComment}
+        placeholder="Descripción"
+        value={description}
+        onChangeText={setDescription}
         style={styles.input}
       />
       <TouchableOpacity style={styles.button} onPress={handlePhotoPick}>
@@ -187,10 +169,15 @@ export default function RegisterIncidenceScreen({ navigation }) {
       <TouchableOpacity style={styles.button} onPress={handleAudioRecord}>
         <Text style={styles.buttonText}>{recording ? "Detener Grabación" : "Grabar Audio"}</Text>
       </TouchableOpacity>
+      {audioUri ? (
+        <TouchableOpacity onPress={() => soundRef.current && soundRef.current.playAsync()}>
+          <Text style={styles.buttonText}>Reproducir Audio</Text>
+        </TouchableOpacity>
+      ) : null}
       <TouchableOpacity style={[styles.button, styles.registerButton]} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Enviar</Text>
       </TouchableOpacity>
-    </Animated.View>
+    </View>
   );
 }
 
@@ -242,3 +229,4 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
 });
+

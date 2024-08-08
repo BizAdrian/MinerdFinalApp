@@ -12,6 +12,9 @@ import TechMenu from "./screens/TechMenu";
 import RegisterVisit from "./screens/RegisterVisitScreen";
 import ViewVisitsScreen from "./screens/ViewVisitsScreen";
 import VisitDetailScreen from "./screens/VisitDetailScreen";
+import Mapa from "./screens/Mapa";
+import Noticias from "./screens/Noticias";
+
 const StackNav = createNativeStackNavigator();
 
 export default function App() {
@@ -55,6 +58,14 @@ export default function App() {
         <StackNav.Screen
           name="Detalles visita"
           component={VisitDetailScreen} />
+
+        <StackNav.Screen
+          name="Mapa"
+          component={Mapa} />
+
+        <StackNav.Screen
+          name="Noticias"
+          component={Noticias} />
 
         <StackNav.Screen name="Login"
           component={LoginScreen}

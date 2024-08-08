@@ -47,24 +47,28 @@ export default function IncidenceDetailScreen({ route }) {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Detalles de la Incidencia</Text>
       <View style={styles.card}>
-        <Text style={styles.label}>Cédula del Director:</Text>
-        <Text style={styles.value}>{incidence.directorId}</Text>
+        <Text style={styles.label}>Título:</Text>
+        <Text style={styles.value}>{incidence.title}</Text>
       </View>
       <View style={styles.card}>
-        <Text style={styles.label}>Código del Centro:</Text>
-        <Text style={styles.value}>{incidence.centerCode}</Text>
+        <Text style={styles.label}>Centro Educativo:</Text>
+        <Text style={styles.value}>{incidence.schoolCenter}</Text>
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.label}>Regional:</Text>
+        <Text style={styles.value}>{incidence.regional}</Text>
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.label}>Distrito:</Text>
+        <Text style={styles.value}>{incidence.district}</Text>
       </View>
       <View style={styles.card}>
         <Text style={styles.label}>Fecha:</Text>
         <Text style={styles.value}>{incidence.date}</Text>
       </View>
       <View style={styles.card}>
-        <Text style={styles.label}>Hora:</Text>
-        <Text style={styles.value}>{incidence.time}</Text>
-      </View>
-      <View style={styles.card}>
-        <Text style={styles.label}>Comentario:</Text>
-        <Text style={styles.value}>{incidence.comment}</Text>
+        <Text style={styles.label}>Descripción:</Text>
+        <Text style={styles.value}>{incidence.description}</Text>
       </View>
       {incidence.photoUri && (
         <View style={styles.card}>

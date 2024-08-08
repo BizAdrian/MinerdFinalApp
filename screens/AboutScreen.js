@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 
 export default function AboutUsScreen() {
   return (
@@ -7,38 +7,33 @@ export default function AboutUsScreen() {
       <Text style={styles.title}>Acerca de Nosotros</Text>
       
       <Text style={styles.description}>
-        Somos un equipo apasionado por el desarrollo de soluciones innovadoras y efectivas para nuestros clientes. Nos especializamos en crear aplicaciones móviles y web que no solo cumplen con los requisitos técnicos, sino que también ofrecen una experiencia de usuario excepcional. Nuestro enfoque se basa en la colaboración, la transparencia y el compromiso con la excelencia.
+        En nuestro equipo, estamos comprometidos con el desarrollo de soluciones que mejoren la educación y el servicio a la comunidad. Nos dedicamos a crear herramientas tecnológicas que faciliten el trabajo de los profesionales educativos y promuevan una gestión eficiente y efectiva. Creemos en el poder de la tecnología para transformar la manera en que interactuamos y aprendemos, siempre buscando un impacto positivo en la sociedad.
       </Text>
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Información del Miembro</Text>
-        <Text style={styles.cardItem}>Nombre: Estefani Ariana</Text>
-        <Text style={styles.cardItem}>Apellido: Lorenzo Soriano</Text>
-        <Text style={styles.cardItem}>Matrícula: 20220852</Text>
+      <Image source={require('../assets/Estefani.jpg')} style={styles.image}/>
+        <Text style={styles.cardTitle}>Estefani Ariana Lorenzo Soriano</Text>
+        <Text style={styles.cardItem}>Matrícula: 2022-0852</Text>
       </View>
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Información del Miembro</Text>
-        <Text style={styles.cardItem}>Nombre: Christopher Alexis</Text>
-        <Text style={styles.cardItem}>Apellido: Peguero Encarnacion</Text>
-        <Text style={styles.cardItem}>Matrícula: 20221024</Text>
+      <Image source={require('../assets/Christopher.jpg')} style={styles.image}/>
+        <Text style={styles.cardTitle}>Christopher Alexis Peguero Encarnacion</Text>
+        <Text style={styles.cardItem}>Matrícula: 2022-1024</Text>
       </View>
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Información del Miembro</Text>
-        <Text style={styles.cardItem}>Nombre: Diego Jossel</Text>
-        <Text style={styles.cardItem}>Apellido: Vega Kelly</Text>
-        <Text style={styles.cardItem}>Matrícula: 20220587</Text>
+      <Image source={require('../assets/Diego.jpg')} style={styles.image}/>
+        <Text style={styles.cardTitle}>Diego Jossel Vega Kelly</Text>
+        <Text style={styles.cardItem}>Matrícula: 2022-0587</Text>
       </View>
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Información del Miembro</Text>
-        <Text style={styles.cardItem}>Nombre: Josue</Text>
-        <Text style={styles.cardItem}>Apellido: Nina Diaz</Text>
-        <Text style={styles.cardItem}>Matrícula: 20220079</Text>
+      <Image source={require('../assets/Josue.jpg')} style={styles.image}/>
+        <Text style={styles.cardTitle}>Josue Nina Diaz</Text>
+        <Text style={styles.cardItem}>Matrícula: 2022-0079</Text>
       </View>
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Información del Miembro</Text>
-        <Text style={styles.cardItem}>Nombre: Adrian Alberto</Text>
-        <Text style={styles.cardItem}>Apellido: Encarnacion Rubiera</Text>
-        <Text style={styles.cardItem}>Matrícula: 20220502</Text>
+        <Image source={require('../assets/Adrian.jpg')} style={styles.image}/>
+        <Text style={styles.cardTitle}>Adrian Alberto Encarnacion Rubiera</Text>
+        <Text style={styles.cardItem}>Matrícula: 2022-0502</Text>
       </View>
     </ScrollView>
   );
@@ -73,6 +68,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     marginBottom: 20, 
+    alignItems: 'center',
   },
   cardTitle: {
     fontSize: 20,
@@ -84,5 +80,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff', 
     marginBottom: 5,
+  },
+  image: {
+    width: 120,  // Ajusta el ancho de la imagen
+    height: 120, // Ajusta la altura de la imagen
+    borderRadius: 60, // Hace que la imagen sea circular
+    marginBottom: 10,
   },
 });

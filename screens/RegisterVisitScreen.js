@@ -53,8 +53,7 @@ export default function RegisterVisitScreen({ navigation }) {
     };
 
     fetchTokenAndMotivos();
-    
-   
+
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 1000,
@@ -244,7 +243,6 @@ export default function RegisterVisitScreen({ navigation }) {
         onChangeText={setLongitud}
         style={styles.input}
       />
-      
       <TextInput
         placeholder="Ruta de la Imagen"
         value={fotoUri}
@@ -305,7 +303,6 @@ export default function RegisterVisitScreen({ navigation }) {
     </Animated.View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -322,7 +319,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff', // Fondo blanco para los inputs
   },
   inputText: {
-    color: '#fff', // Texto blanco
+    color: '#000', // Texto blanco
   },
   button: {
     backgroundColor: '#1E90FF', // Azul brillante

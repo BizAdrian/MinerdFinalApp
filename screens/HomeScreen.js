@@ -57,10 +57,6 @@ export default function HomeScreen({ navigation }) {
   return (
     <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
 
-      <Image
-      source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo8BG6UD3b_Fowh4gtwIjw2GPTWQQ30uBy-w&s' }}
-      style={styles.logo}
-    />
        
       <Text style={styles.welcomeText}>Bienvenidos a Nuestra App</Text>
       <PaperButton mode="contained" style={styles.button} onPress={() => navigation.navigate('Registro de Visitas')}>
@@ -72,10 +68,10 @@ export default function HomeScreen({ navigation }) {
       <PaperButton mode="contained" style={styles.button} onPress={() => navigation.navigate("Opciones Avanzadas")}>
         Ver el horoscopo del dia
       </PaperButton>
-      <PaperButton mode="contained" style={styles.button} onPress={() => navigation.navigate("Opciones Avanzadas")}>
+      <PaperButton mode="contained" style={styles.button} onPress={() => navigation.navigate("Noticias")}>
         Ver las noticias del dia
       </PaperButton>
-      <PaperButton mode="contained" style={styles.button} onPress={() => navigation.navigate("Opciones Avanzadas")}>
+      <PaperButton mode="contained" style={styles.button} onPress={() => navigation.navigate("Mapa")}>
         Ver el mapa de las visitas
       </PaperButton>
       <PaperButton mode="contained" style={styles.button} onPress={() => navigation.navigate("Opciones Avanzadas")}>
@@ -126,6 +122,6 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     backgroundColor: '#E53935', 
-    marginTop: 80,
+    
   },
 });

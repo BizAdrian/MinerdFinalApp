@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Alert, Text, TouchableOpacity, Animated } from 'react-native';
 
 export default function RegisterScreen({ navigation }) {
   const [cedula, setCedula] = useState('');
@@ -9,6 +9,7 @@ export default function RegisterScreen({ navigation }) {
   const [correo, setCorreo] = useState('');
   const [telefono, setTelefono] = useState('');
   const [fechaNacimiento, setFechaNacimiento] = useState('');
+  const [fadeAnim] = useState(new Animated.Value(0)); // Initial value for opacity: 0
 
   const handleRegister = async () => {
     if (!cedula || !nombre || !apellido || !clave || !correo || !telefono || !fechaNacimiento) {
@@ -51,26 +52,38 @@ export default function RegisterScreen({ navigation }) {
     }
   };
 
+  // Fade in animation
+  React.useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcomeText}>Ingrese sus datos</Text>
+    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+      <Text style={styles.title}>Registrarse</Text>
       <TextInput
         placeholder="Cédula"
         value={cedula}
         onChangeText={(text) => setCedula(text)}
         style={styles.input}
+        placeholderTextColor="#ccc"
       />
       <TextInput
         placeholder="Nombre"
         value={nombre}
         onChangeText={(text) => setNombre(text)}
         style={styles.input}
+        placeholderTextColor="#ccc"
       />
       <TextInput
         placeholder="Apellido"
         value={apellido}
         onChangeText={(text) => setApellido(text)}
         style={styles.input}
+        placeholderTextColor="#ccc"
       />
       <TextInput
         placeholder="Contraseña"
@@ -78,6 +91,7 @@ export default function RegisterScreen({ navigation }) {
         onChangeText={(text) => setClave(text)}
         secureTextEntry
         style={styles.input}
+        placeholderTextColor="#ccc"
       />
       <TextInput
         placeholder="Correo"
@@ -85,6 +99,7 @@ export default function RegisterScreen({ navigation }) {
         onChangeText={(text) => setCorreo(text)}
         keyboardType="email-address"
         style={styles.input}
+        placeholderTextColor="#ccc"
       />
       <TextInput
         placeholder="Teléfono"
@@ -92,17 +107,26 @@ export default function RegisterScreen({ navigation }) {
         onChangeText={(text) => setTelefono(text)}
         keyboardType="phone-pad"
         style={styles.input}
+        placeholderTextColor="#ccc"
       />
       <TextInput
         placeholder="Fecha de Nacimiento"
         value={fechaNacimiento}
         onChangeText={(text) => setFechaNacimiento(text)}
         style={styles.input}
+        placeholderTextColor="#ccc"
       />
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Registrarse</Text>
+      <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
+        <Text style={styles.registerButtonText}>Registrarse</Text>
       </TouchableOpacity>
-    </View>
+      
+      <View style={styles.loginContainer}>
+        <Text style={styles.loginText}>¿Ya tienes cuenta?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.loginButton}>Inicia Sesión</Text>
+        </TouchableOpacity>
+      </View>
+    </Animated.View>
   );
 }
 
@@ -113,38 +137,53 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#333', // Fondo gris oscuro
   },
-  welcomeText: {
+  title: {
     fontSize: 24,
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#fff', 
     fontWeight: 'bold',
+    marginBottom: 24,
+    textAlign: 'center',
+    color: '#fff', // Texto blanco
   },
   input: {
-    height: 40,
-    borderColor: '#1E90FF', // Azul brillante
+    height: 50,
+    borderColor: '#ccc',
     borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
-    borderRadius: 8, // Bordes redondeados
-    backgroundColor: '#fff', // Fondo blanco para los inputs
+    borderRadius: 8,
+    marginBottom: 16,
+    paddingHorizontal: 16,
+    backgroundColor: '#444', // Fondo gris oscuro para input
+    color: '#fff', // Texto blanco
   },
-  button: {
-    backgroundColor: '#1E90FF', // Azul brillante
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8, // Bordes redondeados
-    marginBottom: 12,
-    alignItems: 'center',
+  registerButton: {
+    height: 50,
+    borderRadius: 25, // Botón más redondeado
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E53935', // Rojo brillante
+    marginBottom: 16,
     shadowColor: '#000', // Sombra
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
   },
-  buttonText: {
-    color: '#fff', // Texto blanco en los botones
+  registerButtonText: {
+    color: '#fff',
+    fontSize: 18,
     fontWeight: 'bold',
+  },
+  loginContainer: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  loginText: {
+    fontSize: 16,
+    color: '#ccc', // Texto gris claro
+  },
+  loginButton: {
+    fontSize: 16,
+    color: '#1E90FF', // Azul brillante
+    marginTop: 4,
+    borderRadius: 30,
   },
 });

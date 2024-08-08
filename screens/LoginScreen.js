@@ -1,48 +1,48 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert, Text, TouchableOpacity, Animated } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+ 
 export default function LoginScreen({ navigation }) {
   const [cedula, setCedula] = useState('');
   const [clave, setClave] = useState('');
   const [fadeAnim] = useState(new Animated.Value(0)); // Initial value for opacity: 0
-
+ 
   const handleLogin = async () => {
     if (!cedula || !clave) {
       Alert.alert('Error', 'Los campos cédula y clave son requeridos.');
       return;
     }
-
+ 
     try {
       const url = 'https://adamix.net/minerd/def/iniciar_sesion.php';
       let formData = new FormData();
       formData.append('cedula', cedula);
       formData.append('clave', clave);
-
+ 
       let response = await fetch(url, {
         method: 'POST',
         body: formData,
       });
-
+ 
       let result = await response.json();
-
+ 
       if (result.exito) {
         const { token } = result.datos;
-
+ 
         await AsyncStorage.setItem('userToken', token);
-
+ 
         Alert.alert('Inicio de Sesión', 'La sesión se a iniciado correctamente');
         navigation.navigate('Home');
       } else {
         Alert.alert('Error', result.mensaje);
       }
-
+ 
     } catch (error) {
       Alert.alert('Error', 'No se pudo conectar con el servidor.');
       console.error(error);
     }
   };
-
+ 
   // Fade in animation
   React.useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -51,7 +51,7 @@ export default function LoginScreen({ navigation }) {
       useNativeDriver: true,
     }).start();
   }, [fadeAnim]);
-
+ 
   return (
     <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
       <Text style={styles.title}>Iniciar Sesión</Text>
@@ -73,7 +73,7 @@ export default function LoginScreen({ navigation }) {
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
       </TouchableOpacity>
-      
+     
       <View style={styles.registerContainer}>
         <Text style={styles.registerText}>¿No tienes cuenta?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
@@ -83,7 +83,7 @@ export default function LoginScreen({ navigation }) {
     </Animated.View>
   );
 }
-
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
